@@ -34,7 +34,7 @@ The fastest way to get ZimaOS running on your Proxmox server. This method handle
 1. **Connect to your Proxmox node** via SSH
 2. **Run the installation script**:
    ```bash
-   bash -c "$(wget -qLO - https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube.sh)"
+   bash -c "$(wget -qLO - https://raw.githubusercontent.com/Bechir-Ferjani/proxmox-zimaos/refs/heads/main/zimaos_zimacube.sh)"
    ```
 3. **Follow the prompts** to configure your VM settings
 4. **Wait for completion** - the script will handle everything automatically
@@ -74,7 +74,7 @@ For users who prefer more control over the installation process or need custom c
 Execute the installer script on your Proxmox node (not inside the VM):
 
 ```bash
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube_installer.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/Bechir-Ferjani/proxmox-zimaos/refs/heads/main/zimaos_zimacube_installer.sh)"
 ```
 
 **Answer the prompts:**
@@ -129,8 +129,8 @@ To install a specific version of ZimaOS instead of the default:
 
 1. **Download the installation scripts**:
    ```bash
-   wget https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube_installer.sh
-   wget https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube.sh
+   wget https://raw.githubusercontent.com/Bechir-Ferjani/proxmox-zimaos/refs/heads/main/zimaos_zimacube_installer.sh
+   wget https://raw.githubusercontent.com/Bechir-Ferjani/proxmox-zimaos/refs/heads/main/zimaos_zimacube.sh
    ```
 
 2. **Edit the script** to change the version:

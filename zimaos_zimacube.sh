@@ -4,7 +4,7 @@
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube.sh)"
 
 # ZimaOS version
-VERSION="1.4.1"
+VERSION="1.5.3"
 
 # Variables
 URL="https://github.com/IceWhaleTech/ZimaOS/releases/download/$VERSION"

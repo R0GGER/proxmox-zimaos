@@ -108,16 +108,21 @@ qm create $VMID --name $VM_NAME --memory $MEMORY --cores $CORES -localtime 1 -bi
 
 # Create EFI disk
 echo "Creating EFI disk..."
-if [[ "$VOLUME" == "local" ]]; then
-    # Directory-based storage
-    mkdir -p "/var/lib/vz/images/$VMID"
-    qemu-img create -f raw "/var/lib/vz/images/$VMID/vm-$VMID-disk-0.raw" 4M
-    qm set $VMID -efidisk0 $VOLUME:$VMID/vm-$VMID-disk-0.raw,efitype=4m
-else
-    # Block storage (like local-lvm)
-    pvesm alloc $VOLUME $VMID vm-$VMID-disk-0 4M
-    qm set $VMID -efidisk0 $VOLUME:vm-$VMID-disk-0,efitype=4m
-fi
+STORAGE_TYPE=$(pvesm status -storage "$VOLUME" | awk 'NR==2 {print $2}')
+case "$STORAGE_TYPE" in
+    dir|btrfs|nfs|cifs|glusterfs)
+        # File-based storage
+        echo "Detected file-based storage ($STORAGE_TYPE)"
+        pvesm alloc $VOLUME $VMID vm-$VMID-disk-0.raw 4M
+        qm set $VMID -efidisk0 $VOLUME:$VMID/vm-$VMID-disk-0.raw,efitype=4m
+        ;;
+    *)
+        # Block-based storage (lvm, lvmthin, zfspool, rbd, etc.)
+        echo "Assuming block-based storage ($STORAGE_TYPE)"
+        pvesm alloc $VOLUME $VMID vm-$VMID-disk-0 4M
+        qm set $VMID -efidisk0 $VOLUME:vm-$VMID-disk-0,efitype=4m
+        ;;
+esac
 if [ $? -ne 0 ]; then
     echo "Error: Failed to create EFI disk."
     exit 1
@@ -125,7 +130,7 @@ fi
 
 # Import the disk
 echo "Importing the disk..."
-qm importdisk $VMID "$EXTRACTED_PATH" $VOLUME
+qm importdisk $VMID "$EXTRACTED_PATH" $VOLUME --format raw
 if [ $? -ne 0 ]; then
     echo "Error: Failed to import the disk."
     exit 1
@@ -133,13 +138,14 @@ fi
 
 # Attach the disk
 echo "Attaching the disk..."
-if [[ "$VOLUME" == "local" ]]; then
-    # Directory-based storage
-    qm set $VMID --sata0 $VOLUME:$VMID/vm-$VMID-disk-1.raw --boot c --scsihw virtio-scsi-pci --boot order=sata0
-else
-    # Block storage (like local-lvm)
-    qm set $VMID --sata0 $VOLUME:vm-$VMID-disk-1 --boot c --scsihw virtio-scsi-pci --boot order=sata0
-fi
+case "$STORAGE_TYPE" in
+    dir|btrfs|nfs|cifs|glusterfs)
+        qm set $VMID --sata0 $VOLUME:$VMID/vm-$VMID-disk-1.raw --boot c --scsihw virtio-scsi-pci --boot order=sata0
+        ;;
+    *)
+        qm set $VMID --sata0 $VOLUME:vm-$VMID-disk-1 --boot c --scsihw virtio-scsi-pci --boot order=sata0
+        ;;
+esac
 if [ $? -ne 0 ]; then
     echo "Error: Failed to attach the disk."
     exit 1

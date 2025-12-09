@@ -90,7 +90,7 @@ fi
 
 # Import the disk
 echo -e "\n${YELLOW}Importing the disk...${NC}"
-qm importdisk $VMID "$IMAGE_PATH" $VOLUME
+qm importdisk $VMID "$IMAGE_PATH" $VOLUME --format raw
 if [ $? -ne 0 ]; then
     echo -e "${RED}Error: Failed to import the disk.${NC}"
     rm -f "$IMAGE_PATH" 
@@ -99,7 +99,15 @@ fi
 
 # Attach the disk to the VM
 echo -e "\n${YELLOW}Attaching the disk...${NC}"
-qm set $VMID --$DISK $VOLUME:vm-$VMID-disk-$DISK_NUMBER --boot c --scsihw virtio-scsi-pci --boot order=$DISK
+STORAGE_TYPE=$(pvesm status -storage "$VOLUME" | awk 'NR==2 {print $2}')
+case "$STORAGE_TYPE" in
+    dir|btrfs|nfs|cifs|glusterfs)
+        qm set $VMID --$DISK $VOLUME:$VMID/vm-$VMID-disk-$DISK_NUMBER.raw --boot c --scsihw virtio-scsi-pci --boot order=$DISK
+        ;;
+    *)
+        qm set $VMID --$DISK $VOLUME:vm-$VMID-disk-$DISK_NUMBER --boot c --scsihw virtio-scsi-pci --boot order=$DISK
+        ;;
+esac
 if [ $? -ne 0 ]; then
     echo -e "${RED}Error: Failed to set the disk.${NC}"
     exit 1

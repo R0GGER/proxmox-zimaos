@@ -59,12 +59,18 @@ read -p "Enter number of CPU cores [2]: " CORES
 CORES=${CORES:-2}
 validate_number $CORES
 
+# Disk size
+read -p "Enter disk size in GB [16]: " DISK_SIZE
+DISK_SIZE=${DISK_SIZE:-16}
+validate_number $DISK_SIZE
+
 echo -e "\n${GREEN}Creating VM with the following parameters:${NC}"
 echo "VMID: $VMID"
 echo "Name: $VM_NAME"
 echo "Volume: $VOLUME"
 echo "Memory: $MEMORY MB"
 echo "Cores: $CORES"
+echo "Disk Size: $DISK_SIZE GB"
 echo "Image: $IMAGE"
 
 read -p "Continue? (y/n): " CONFIRM
@@ -152,8 +158,8 @@ if [ $? -ne 0 ]; then
 fi
 
 # Resize disk
-echo "Resize ZimaOS disk"
-qm resize $VMID sata0 +8G
+echo "Resize ZimaOS disk to ${DISK_SIZE}G"
+qm resize $VMID sata0 +${DISK_SIZE}G
 if [ $? -ne 0 ]; then
   echo "Error: Failed to resize the disk."
   exit 1

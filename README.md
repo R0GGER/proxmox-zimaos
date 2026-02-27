@@ -12,7 +12,7 @@ This guide provides step-by-step instructions for installing [ZimaOS](https://gi
 - [Common Tasks](#common-tasks)
 - [Troubleshooting](#troubleshooting)
 
-## 🚀 Installation Methods
+## Installation Methods
 
 Choose the installation method that best suits your needs:
 
@@ -22,7 +22,7 @@ Choose the installation method that best suits your needs:
 | **\*.img** | ~2 min | Easy        | Fully automated, minimal input |
 | **Manual** | ~5 min | Medium      | Step-by-step, full control |
 
-## ⚡ ISO version - Super Easy
+## ISO version - Super Easy
 
 The **ISO script** (`zimaos_zimacube_installer-iso.sh`) is the easiest way to install ZimaOS using the official installer. It does everything for you:
 
@@ -42,7 +42,7 @@ The **ISO script** (`zimaos_zimacube_installer-iso.sh`) is the easiest way to in
 6. **Run the ZimaOS installer** in the VM (e.g. choose “Install ZimaOS”).
 7. **After installation**: STOP (not poweroff) the VM, detach the ISO (set CD/DVD to “Do not use any media”), then start the VM again.
 
-## ⚡ IMG version - Easy
+## IMG version - Easy
 
 The fastest way to get ZimaOS running on your Proxmox server. This method handles everything automatically.
 
@@ -71,7 +71,7 @@ The fastest way to get ZimaOS running on your Proxmox server. This method handle
 
 > **Important**: Unfortunately, it's not possible to update the auto-install script to the latest version of ZimaOS, because IceWhaleTech/ZimaOS no longer releases ZimaOS images, but only installers. Update ZimaOS after you have logged into ZimaOS.
 
-## 🔧 Manual Installation
+## Manual Installation
 
 For users who prefer more control over the installation process or need custom configurations.
 
@@ -128,7 +128,7 @@ Watch the complete installation process: [ZimaOS Proxmox Installation Video](htt
 
 > **Note**: The video is fast-forwarded in some sections for brevity. 
 
-## ⚙️ Post-Installation Configuration
+## Post-Installation Configuration
 
 After successful installation, you may need to perform additional configuration steps:
 
@@ -143,7 +143,7 @@ After successful installation, you may need to perform additional configuration 
 - Configure static IP if needed
 - Set up port forwarding for external access
 
-## 🔧 Common Tasks
+## Common Tasks
 
 ### Changing ZimaOS Version
 
@@ -197,7 +197,7 @@ To add more drives to your ZimaOS VM:
 
 ![Add Drive Example](https://github.com/user-attachments/assets/a3c2463f-6cc1-4671-9ddb-a717a06284e8)
 
-## 🚨 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -219,7 +219,7 @@ To add more drives to your ZimaOS VM:
 
 ---
 
-## 📚 Additional Resources
+## Additional Resources
 
 - **ZimaOS GitHub**: [https://github.com/IceWhaleTech/ZimaOS](https://github.com/IceWhaleTech/ZimaOS)
 - **Proxmox Documentation**: [https://pve.proxmox.com/wiki/Main_Page](https://pve.proxmox.com/wiki/Main_Page)

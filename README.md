@@ -5,7 +5,8 @@ This guide provides step-by-step instructions for installing [ZimaOS](https://gi
 ## 📋 Table of Contents
 
 - [Installation Methods](#installation-methods)
-- [Quick Start (Automatic Installation)](#quick-start-automatic-installation)
+- [ISO version — Super Easy](#iso-version-super-easy)
+- [IMG version — Easy](#img-version-easy)
 - [Manual Installation](#manual-installation)
 - [Post-Installation Configuration](#post-installation-configuration)
 - [Common Tasks](#common-tasks)
@@ -17,10 +18,31 @@ Choose the installation method that best suits your needs:
 
 | Method | Time Required | Difficulty | Description |
 |--------|---------------|------------|-------------|
-| **Automatic** | ~2 minutes | Easy | Fully automated installation with minimal user input |
+| ***.iso** | ~2 minutes | Super Easy | Script creates a new VM, downloads the ZimaOS *.iso and attaches it. You start the VM and run the installer. |
+| ***.img** | ~2 minutes | Easy | Fully automated installation with minimal user input |
 | **Manual** | ~5 minutes | Medium | Step-by-step installation with more control |
 
-## ⚡ Quick Start (Automatic Installation)
+## ⚡ ISO version — Super Easy
+
+The **ISO script** (`zimaos_zimacube_installer-iso.sh`) is the easiest way to install ZimaOS using the official installer. It does everything for you:
+
+1. **Run the script** on your Proxmox node (SSH):
+   ```bash
+   bash -c "$(wget -qLO - https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube_installer-iso.sh)"
+   ```
+2. **Answer a few prompts** (you can press Enter to accept defaults):
+   - VM ID (100–999)
+   - Name (default: ZimaOS)
+   - Disk size in GB (default: 32)
+   - CPU cores (default: 2)
+   - Memory in MB (default: 2048)
+3. **Confirm** when the script shows the VM settings.
+4. The script **creates the VM**, **downloads the ZimaOS installer ISO**, and **attaches it as the boot CD/DVD**.
+5. **Start the VM** in Proxmox. It boots from the installer.
+6. **Run the ZimaOS installer** in the VM (e.g. choose “Install ZimaOS”).
+7. **After installation**: STOP (not poweroff) the VM, detach the ISO (set CD/DVD to “Do not use any media”), then start the VM again.
+
+## ⚡ IMG version — Easy
 
 The fastest way to get ZimaOS running on your Proxmox server. This method handles everything automatically.
 

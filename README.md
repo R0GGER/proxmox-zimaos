@@ -16,11 +16,11 @@ This guide provides step-by-step instructions for installing [ZimaOS](https://gi
 
 Choose the installation method that best suits your needs:
 
-| Method | Time Required | Difficulty | Description |
-|--------|---------------|------------|-------------|
-| ***.iso** | ~2 minutes | Super Easy | Script creates a new VM, downloads the ZimaOS *.iso and attaches it. You start the VM and run the installer. |
-| ***.img** | ~2 minutes | Easy | Fully automated installation with minimal user input |
-| **Manual** | ~5 minutes | Medium | Step-by-step installation with more control |
+| Method   | Time   | Difficulty  | Description |
+|----------|--------|-------------|-------------|
+| **\*.iso** | ~2 min | Super Easy  | New VM, download ISO, attach; you run installer |
+| **\*.img** | ~2 min | Easy        | Fully automated, minimal input |
+| **Manual** | ~5 min | Medium      | Step-by-step, full control |
 
 ## ⚡ ISO version — Super Easy
 

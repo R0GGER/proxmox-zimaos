@@ -5,8 +5,8 @@ This guide provides step-by-step instructions for installing [ZimaOS](https://gi
 ## 📋 Table of Contents
 
 - [Installation Methods](#installation-methods)
-- [ISO version - Super Easy](#iso-version-super-easy)
-- [IMG version - Easy](#img-version-easy)
+- [ISO version - Super Easy](#iso-version---super-easy)
+- [IMG version - Easy](#img-version---easy)
 - [Manual Installation](#manual-installation)
 - [Post-Installation Configuration](#post-installation-configuration)
 - [Common Tasks](#common-tasks)

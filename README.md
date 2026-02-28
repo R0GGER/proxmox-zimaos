@@ -31,6 +31,7 @@ The **ISO script** (`zimaos_zimacube_installer-iso.sh`) is the easiest way to in
    bash -c "$(wget -qLO - https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube_installer-iso.sh)"
    ```
 2. **Answer a few prompts** (you can press Enter to accept defaults):
+   - ZimaOS version (`latest` or a specific version number, e.g. `1.5.4`)
    - VM ID (100–999)
    - Name (default: ZimaOS)
    - Disk size in GB (default: 32)

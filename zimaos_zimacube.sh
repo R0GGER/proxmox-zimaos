@@ -56,7 +56,7 @@ echo "because only installer ISOs are published now. Update ZimaOS after first l
 echo
 read -p "Continue anyway with this legacy IMG script? (y/N): " LEGACY_CONFIRM
 if [[ $LEGACY_CONFIRM != [yY] ]]; then
-    echo "Cancelled. Recommended next step: use zimaos_zimacube_installer-iso.sh"
+    echo "Cancelled."
     exit 0
 fi
 echo

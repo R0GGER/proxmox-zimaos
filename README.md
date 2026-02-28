@@ -44,7 +44,7 @@ The **ISO script** (`zimaos_zimacube_installer-iso.sh`) is the easiest way to in
 
 ## IMG version - Easy
 
-> **Outdated — not recommended.** IceWhaleTech no longer releases ZimaOS disk images (`.img`), only installer ISOs. This method may use an old image and cannot be updated to the latest ZimaOS. Use the [ISO version](#iso-version---super-easy) or [Manual installation](#manual-installation) instead. The script is kept for reference only.
+> **Outdated — not recommended.** IceWhaleTech no longer releases ZimaOS disk images (`.img`), only installer ISOs. Use the [ISO version](#iso-version---super-easy) or [Manual installation](#manual-installation) instead. The script is kept for reference only.
 
 The fastest way to get ZimaOS running on your Proxmox server. This method handles everything automatically.
 

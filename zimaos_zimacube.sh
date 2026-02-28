@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# !!! IMPORTANT !!! 
+# Unfortunately, it's not possible to update the auto-install script to the latest version of ZimaOS, because IceWhaleTech/ZimaOS no longer releases ZimaOS images, but only installers. 
+# Please update ZimaOS after you have logged into ZimaOS.
+
+# This script is kept for reference only.
+# Use zimaos_zimacube_installer-iso.sh instead.
+# This script is not maintained and may not work with the latest ZimaOS version.
+
+# Video Tutorial: https://www.youtube.com/watch?v=3n739Dia8eMz
+
 # github.com/R0GGER/proxmox-zimaos
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube.sh)"
 
@@ -35,6 +45,20 @@ check_vmid() {
 clear
 
 echo -e "${YELLOW}=== Proxmox ZimaOS VM Creator ===${NC}"
+echo
+echo -e "${YELLOW}Warning: This IMG installer is outdated and not recommended.${NC}"
+echo "IceWhaleTech no longer releases ZimaOS disk images (.img), only installer ISOs."
+echo "Use zimaos_zimacube_installer-iso.sh or the manual installation method instead."
+echo "This script is kept for reference only."
+echo
+echo "Important: It is not possible to update this auto-install flow to the latest ZimaOS image"
+echo "because only installer ISOs are published now. Update ZimaOS after first login."
+echo
+read -p "Continue anyway with this legacy IMG script? (y/N): " LEGACY_CONFIRM
+if [[ $LEGACY_CONFIRM != [yY] ]]; then
+    echo "Cancelled. Recommended next step: use zimaos_zimacube_installer-iso.sh"
+    exit 0
+fi
 echo
 
 # VMID

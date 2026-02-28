@@ -6,10 +6,8 @@ This guide provides step-by-step instructions for installing [ZimaOS](https://gi
 
 - [Installation Methods](#installation-methods)
 - [ISO version - Super Easy](#iso-version---super-easy)
-- [IMG version - Easy](#img-version---easy)
 - [Manual Installation](#manual-installation)
 - [Post-Installation Configuration](#post-installation-configuration)
-- [Common Tasks](#common-tasks)
 - [Troubleshooting](#troubleshooting)
 
 ## Installation Methods
@@ -19,7 +17,6 @@ Choose the installation method that best suits your needs:
 | Method   | Time   | Difficulty  | Description |
 |----------|--------|-------------|:-------------|
 | **\*.iso** | ~2 min | Super Easy  | New VM, download ISO, attach; you run installer |
-| **\*.img** | ~2 min | Easy        | Outdated; no longer recommended (use ISO or Manual) |
 | **Manual** | ~5 min | Medium      | Step-by-step, full control |
 
 ## ISO version - Super Easy
@@ -42,37 +39,6 @@ The **ISO script** (`zimaos_zimacube_installer-iso.sh`) is the easiest way to in
 5. **Start the VM** in Proxmox. It boots from the installer.
 6. **Run the ZimaOS installer** in the VM (e.g. choose “Install ZimaOS”).
 7. **After installation**: STOP (not poweroff) the VM, detach the ISO (set CD/DVD to “Do not use any media”), then start the VM again.
-
-## IMG version - Easy
-
-> **Outdated — not recommended.** IceWhaleTech no longer releases ZimaOS disk images (`.img`), only installer ISOs. Use the [ISO version](#iso-version---super-easy) or [Manual installation](#manual-installation) instead. The script is kept for reference only.
-
-The fastest way to get ZimaOS running on your Proxmox server. This method handles everything automatically.
-
-### Prerequisites
-- Proxmox VE running on your server
-- SSH access to your Proxmox node
-- Basic understanding of VM management
-
-### Installation Steps
-
-1. **Connect to your Proxmox node** via SSH
-2. **Run the installation script**:
-   ```bash
-   bash -c "$(wget -qLO - https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube.sh)"
-   ```
-3. **Follow the prompts** to configure your VM settings
-4. **Wait for completion** - the script will handle everything automatically
-
-### What the Script Does
-- Creates a new VM with optimal settings for ZimaOS
-- Downloads the latest ZimaOS image
-- Configures storage and network settings
-- Sets up the VM for immediate use
-
-> **Note**: The automatic installation creates a VM with default settings. For custom configurations, use the manual installation method.
-
-> **Important**: Unfortunately, it's not possible to update the auto-install script to the latest version of ZimaOS, because IceWhaleTech/ZimaOS no longer releases ZimaOS images, but only installers. Update ZimaOS after you have logged into ZimaOS.
 
 ## Manual Installation
 
@@ -99,7 +65,7 @@ For users who prefer more control over the installation process or need custom c
 Execute the installer script on your Proxmox node (not inside the VM):
 
 ```bash
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube_installer.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube_installer-iso.sh)"
 ```
 
 **Answer the prompts:**
@@ -146,47 +112,6 @@ After successful installation, you may need to perform additional configuration 
 - Configure static IP if needed
 - Set up port forwarding for external access
 
-## Common Tasks
-
-### Changing ZimaOS Version
-
-To install a specific version of ZimaOS instead of the default:
-
-1. **Download the installation scripts**:
-   ```bash
-   wget https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube_installer.sh
-   wget https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube.sh
-   ```
-
-2. **Edit the script** to change the version:
-   ```bash
-   nano zimaos_zimacube.sh
-   # or
-   nano zimaos_zimacube_installer.sh
-   ```
-
-3. **Modify the VERSION variable**:
-   ```bash
-   # Change from:
-   VERSION="1.3.0-2"
-   # To your desired version:
-   VERSION="1.3.1-beta1"
-   ```
-   > Check [ZimaOS releases](https://github.com/IceWhaleTech/ZimaOS/releases) for available versions
-
-4. **Save and make executable**:
-   ```bash
-   # Save: Ctrl + X → Y → Enter
-   chmod +x zimaos_zimacube*
-   ```
-
-5. **Run the modified script**:
-   ```bash
-   ./zimaos_zimacube.sh
-   # or
-   ./zimaos_zimacube_installer.sh
-   ```
-
 ### Adding Additional Storage
 
 To add more drives to your ZimaOS VM:
@@ -216,17 +141,8 @@ To add more drives to your ZimaOS VM:
 
 ### Getting Help
 
-- **ZimaOS Documentation**: [Official ZimaOS Documentation](https://github.com/IceWhaleTech/ZimaOS)
-- **Community Support**: Check ZimaOS GitHub issues and discussions
-- **Video Tutorial**: Reference the [installation video](https://www.youtube.com/watch?v=3n739Dia8eMz)
-
----
-
-## Additional Resources
-
-- **ZimaOS GitHub**: [https://github.com/IceWhaleTech/ZimaOS](https://github.com/IceWhaleTech/ZimaOS)
+- **ZimaOS GitHub**: [Official ZimaOS Documentation](https://github.com/IceWhaleTech/ZimaOS)
 - **Proxmox Documentation**: [https://pve.proxmox.com/wiki/Main_Page](https://pve.proxmox.com/wiki/Main_Page)
-- **Installation Video**: [https://www.youtube.com/watch?v=3n739Dia8eMz](https://www.youtube.com/watch?v=3n739Dia8eMz)
 
 ---
 

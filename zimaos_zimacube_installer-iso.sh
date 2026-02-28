@@ -3,20 +3,24 @@
 # github.com/R0GGER/proxmox-zimaos
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube_installer-iso.sh)"
 
-# ZimaOS version
-VERSION="1.5.4"
+# Default ZimaOS version
+DEFAULT_VERSION="latest"
+FALLBACK_VERSION="1.5.4"
 
 # Variables
-URL="https://github.com/IceWhaleTech/ZimaOS/releases/download/$VERSION/zimaos-x86_64-${VERSION}_installer.iso"
-IMAGE=$(basename "$URL")
 ISO_STORAGE=$(pvesm status --content iso 2>/dev/null | awk 'NR==2 {print $1}')
 ISO_STORAGE=${ISO_STORAGE:-local}
-IMAGE_VOLID="$ISO_STORAGE:iso/$IMAGE"
+VERSION=""
+RELEASE_TAG=""
+URL=""
+IMAGE=""
+IMAGE_VOLID=""
 IMAGE_PATH=""
 
 # Colors
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
+ORANGE='\033[38;5;208m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
@@ -42,11 +46,36 @@ check_volume() {
     fi
 }
 
+get_latest_release_tag() {
+    local latest_tag
+    latest_tag=$(wget -qO- "https://api.github.com/repos/IceWhaleTech/ZimaOS/releases/latest" | sed -n 's/.*"tag_name":[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)
+    if [ -z "$latest_tag" ]; then
+        echo -e "${RED}Error: Could not determine latest ZimaOS release tag from GitHub.${NC}"
+        exit 1
+    fi
+    echo "$latest_tag"
+}
+
 clear
 echo -e "${YELLOW}=== Proxmox ZimaOS Installer ===${NC}"
-echo -e "${GREEN}Version: $VERSION${NC}\n"
-
 echo -e "This script will create a new VM and attach the ZimaOS installer ISO.\n"
+
+read -e -i "$DEFAULT_VERSION" -p "ZimaOS version [${DEFAULT_VERSION} or e.g. ${FALLBACK_VERSION}]: " VERSION_INPUT
+VERSION_INPUT=${VERSION_INPUT:-$DEFAULT_VERSION}
+
+if [[ "${VERSION_INPUT,,}" == "latest" ]]; then
+    RELEASE_TAG=$(get_latest_release_tag)
+    VERSION="${RELEASE_TAG#v}"
+else
+    RELEASE_TAG="$VERSION_INPUT"
+    VERSION="${VERSION_INPUT#v}"
+fi
+
+URL="https://github.com/IceWhaleTech/ZimaOS/releases/download/$RELEASE_TAG/zimaos-x86_64-${VERSION}_installer.iso"
+IMAGE=$(basename "$URL")
+IMAGE_VOLID="$ISO_STORAGE:iso/$IMAGE"
+
+echo -e "${GREEN}Selected version: $VERSION${NC}\n"
 
 while true; do
     read -p "Enter VM ID (100-999): " VMID
@@ -168,5 +197,5 @@ fi
 
 # Get started
 echo -e "\n${GREEN}Success! ZimaOS installer ISO has been added to VM $VMID${NC}\n"
-echo -e "Start the VM and run the installer. After installation, STOP the VM and detach the ISO (set CD/DVD to 'Do not use any media').\n"
+echo -e "${ORANGE}IMPORTANT:${NC} Start the VM and run the installer. After installation, ${ORANGE}\033[1mSTOP${NC} the VM and detach the ISO (set CD/DVD to 'Do not use any media').\n"
 

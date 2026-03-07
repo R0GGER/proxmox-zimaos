@@ -170,12 +170,16 @@ fi
 
 mkdir -p "$(dirname "$IMAGE_PATH")"
 
-# Download
-echo -e "\n${YELLOW}Downloading the installer ISO...${NC}"
-wget -q --show-progress -O "$IMAGE_PATH" "$URL"
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Error: Failed to download the installer ISO.${NC}"
-    exit 1
+# Download (skip if already exists)
+if [ -f "$IMAGE_PATH" ]; then
+    echo -e "\n${GREEN}ISO already exists in $ISO_STORAGE, skipping download.${NC}"
+else
+    echo -e "\n${YELLOW}Downloading the installer ISO...${NC}"
+    wget -q --show-progress -O "$IMAGE_PATH" "$URL"
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}Error: Failed to download the installer ISO.${NC}"
+        exit 1
+    fi
 fi
 
 # Attach ISO as CD/DVD drive

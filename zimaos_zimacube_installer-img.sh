@@ -4,7 +4,7 @@
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/R0GGER/proxmox-zimaos/refs/heads/main/zimaos_zimacube_installer-img.sh)"
 
 # ZimaOS version
-VERSION="1.5.4"
+VERSION="1.6.1"
 
 # Variables
 URL="https://github.com/IceWhaleTech/ZimaOS/releases/download/$VERSION/zimaos-x86_64-${VERSION}_installer.img"

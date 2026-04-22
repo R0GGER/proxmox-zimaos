@@ -5,7 +5,7 @@
 
 # Default ZimaOS version
 DEFAULT_VERSION="latest"
-FALLBACK_VERSION="1.5.4"
+FALLBACK_VERSION="1.6.1"
 
 # Variables
 ISO_STORAGE=$(pvesm status --content iso 2>/dev/null | awk 'NR==2 {print $1}')

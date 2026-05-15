@@ -92,9 +92,12 @@ done
 read -p "Name [ZimaOS]: " VM_NAME
 VM_NAME=${VM_NAME:-ZimaOS}
 
-AVAILABLE_DISK_STORAGES=($(pvesm status --content images 2>/dev/null | awk 'NR>1 && $2=="active" {print $1}'))
+AVAILABLE_DISK_STORAGES=($(pvesm status --content images 2>/dev/null | awk 'NR>1 && $3=="active" {print $1}'))
 if [ ${#AVAILABLE_DISK_STORAGES[@]} -eq 0 ]; then
-    echo -e "${RED}Error: No active storage found that supports disk images.${NC}"
+    AVAILABLE_DISK_STORAGES=($(pvesm status 2>/dev/null | awk 'NR>1 && $3=="active" {print $1}'))
+fi
+if [ ${#AVAILABLE_DISK_STORAGES[@]} -eq 0 ]; then
+    echo -e "${RED}Error: No active storage found.${NC}"
     exit 1
 elif [ ${#AVAILABLE_DISK_STORAGES[@]} -eq 1 ]; then
     DISK_STORAGE="${AVAILABLE_DISK_STORAGES[0]}"

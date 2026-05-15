@@ -92,8 +92,19 @@ done
 read -p "Name [ZimaOS]: " VM_NAME
 VM_NAME=${VM_NAME:-ZimaOS}
 
-DISK_STORAGE="local-lvm"
-check_volume $DISK_STORAGE
+AVAILABLE_DISK_STORAGES=($(pvesm status --content images 2>/dev/null | awk 'NR>1 && $2=="active" {print $1}'))
+if [ ${#AVAILABLE_DISK_STORAGES[@]} -eq 0 ]; then
+    echo -e "${RED}Error: No active storage found that supports disk images.${NC}"
+    exit 1
+elif [ ${#AVAILABLE_DISK_STORAGES[@]} -eq 1 ]; then
+    DISK_STORAGE="${AVAILABLE_DISK_STORAGES[0]}"
+    echo -e "Disk storage: ${GREEN}$DISK_STORAGE${NC} (auto-detected)"
+else
+    echo -e "Available disk storages: ${GREEN}${AVAILABLE_DISK_STORAGES[*]}${NC}"
+    read -e -i "${AVAILABLE_DISK_STORAGES[0]}" -p "Disk storage [${AVAILABLE_DISK_STORAGES[0]}]: " DISK_STORAGE
+    DISK_STORAGE=${DISK_STORAGE:-${AVAILABLE_DISK_STORAGES[0]}}
+    check_volume $DISK_STORAGE
+fi
 
 # Disk Size
 while true; do
